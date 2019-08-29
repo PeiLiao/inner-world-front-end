@@ -1,0 +1,49 @@
+.DataCard {
+	border-radius: 9.6px;
+	border: none;
+	background-color: rgba(61, 77, 106, 0.5);
+	display: flex;
+	.DataCard__Sider {
+		width: 152px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.DataCard__Logo {
+			height: 88px;
+			width: 88px;
+		}
+	}
+	.DataCard__Content {
+		display: flex;
+		flex-direction: column;
+		.DataCard__Title {
+			margin-top: 28px;
+			font-family: SourceHanSansSC-Regular;
+			font-size: 20px;
+			color: rgba(201, 209, 222, 0.7);
+			line-height: 29px;
+			text-align: left;
+		}
+		.DataCard__Value {
+			display: flex;
+			position: relative;
+			.DataCard__Num {
+				font-family: SourceHanSansSC-Medium;
+				font-size: 60px;
+				color: #c9d1de;
+				letter-spacing: 0.94px;
+				text-align: left;
+				line-height: 87px;
+				opacity: 1;
+			}
+			.DataCard__Unit {
+				margin-left: 18px;
+				margin-top: 43px;
+				font-family: SourceHanSansSC-Regular;
+				font-size: 20px;
+				color: rgba(201, 209, 222, 0.7);
+				text-align: left;
+			}
+		}
+	}
+}
