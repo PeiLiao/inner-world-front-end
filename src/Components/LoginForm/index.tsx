@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Icon, Input, Button } from 'antd';
-import { UserProps } from '../../contexts/UserContext';
+import UserContext, { UserProps } from '../../contexts/UserContext';
 import history from '../../routes/history';
 import './index.less';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
@@ -24,9 +24,12 @@ class WrappedVerticalLoginForm extends React.Component<any, any> {
 			this.props.form.validateFields((err, values) => {
 				if (!err) {
 					console.log('Received values of form: ', values);
-					if (handleLogin(values.username, values.password)) {
-						history.push('/content');
-					}
+					handleLogin(values.username, values.password).then((res) => {
+						console.log(res);
+						if (res !== -1) {
+							history.push(`/content/${res}`);
+						}
+					});
 				}
 			});
 		};
@@ -65,6 +68,12 @@ interface Iprops {
 	context: UserProps;
 	form: WrappedFormUtils<any>;
 }
-const LoginForm = Form.create<Iprops>({ name: 'login' })(WrappedVerticalLoginForm);
+export const LoginForm = Form.create<Iprops>({ name: 'login' })(WrappedVerticalLoginForm);
 
-export default LoginForm;
+const Login = (props) => {
+	console.log(props);
+	const context = React.useContext(UserContext);
+	console.log('Login', context);
+	return <LoginForm context={context} />;
+};
+export default Login;

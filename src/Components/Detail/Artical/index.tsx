@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Typography } from 'antd';
+import { Highlighter } from 'react-highlight-words';
 import KeywordContext from '../../../contexts/KeywordContext';
 import './style.less';
 
@@ -12,14 +13,12 @@ const content = '<h3>In the process of internal desktop applications development
 
 const Artical = (props) => {
 	const [keyword] = React.useContext(KeywordContext);
-	const highlightText = keyword ? content.replace(new RegExp(`(${keyword})`, 'g'), `<span class="highlight">$1</span>`) : content;
-
 	return (
 		<Typography>
 			<Title>
 				This is Content:{props.id},searching:{keyword}
-			</Title>{' '}
-			<div dangerouslySetInnerHTML={{ __html: highlightText }} />
+			</Title>
+			<Highlighter highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }} searchWords={[keyword]} autoEscape textToHighlight={content} />
 		</Typography>
 	);
 };

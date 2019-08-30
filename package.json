@@ -35,6 +35,7 @@
     "html-webpack-plugin": "4.0.0-beta.5",
     "http-proxy-middleware": "^0.19.1",
     "identity-obj-proxy": "3.0.0",
+    "immutability-helper": "^3.0.1",
     "is-wsl": "^1.1.0",
     "jest": "24.7.1",
     "jest-environment-jsdom-fourteen": "0.1.0",
@@ -52,15 +53,17 @@
     "react-app-polyfill": "^1.0.1",
     "react-dev-utils": "^9.0.1",
     "react-dom": "^16.8.6",
+    "react-highlight-words": "^0.16.0",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-scripts-ts": "^3.1.0",
     "redux": "^4.0.4",
+    "redux-actions": "^2.6.5",
+    "redux-saga": "^1.0.5",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "semver": "6.0.0",
     "style-loader": "0.23.1",
-    "stylelint-config-standard": "^18.3.0",
     "terser-webpack-plugin": "1.2.3",
     "ts-pnp": "1.1.2",
     "typescript": "^3.5.3",
@@ -94,7 +97,8 @@
     "@babel/plugin-transform-runtime": "^7.5.5",
     "eslint": "^5.16.0",
     "less": "^3.9.0",
-    "less-loader": "^5.0.0"
+    "less-loader": "^5.0.0",
+    "stylelint-config-standard": "^18.3.0"
   },
   "jest": {
     "collectCoverageFrom": [

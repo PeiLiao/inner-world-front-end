@@ -7,6 +7,7 @@ interface IState {
 
 class TableCon extends React.Component<any, IState> {
 	public componentWillMount() {
+		console.log(this.props.match.params.type);
 		this.setState({ type: this.props.match.params.type });
 	}
 
@@ -82,7 +83,8 @@ class TableCon extends React.Component<any, IState> {
 
 	render() {
 		const { type } = this.state;
-		console.log(this.mockData(type));
+		console.log(type);
+		// data = getTableData()
 		return (
 			<div>
 				<PageHeader title={`Welcome to this ${type ? type : 'whole'} page`} subTitle="See me!" />

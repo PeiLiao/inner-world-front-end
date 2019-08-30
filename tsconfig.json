@@ -17,5 +17,5 @@
 		"rootDir": "src",
 		"isolatedModules": false
 	},
-	"include": ["src"]
+	"include": ["src", "src/api/.tsx"]
 }

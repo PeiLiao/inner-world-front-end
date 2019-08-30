@@ -1,24 +1,38 @@
 import React from 'react';
-import { postJson } from '../api/httpService';
-import { LOGIN_URL } from '../constants/url';
+import { postJson } from '../helpers/utils/HttpService';
+import { LOGIN_URL, GET_USER } from '../constants/url';
 import { message } from 'antd';
+import { getJson } from '../helpers/utils/HttpService';
+import { userInfo } from 'os';
 
 export interface ConfigProviderProps {
 	children?: React.ReactNode;
 }
 
-export interface UserProps {
+export interface UserInfo {
 	username: string;
 	login: boolean;
+	zoneId: number;
+}
+
+export interface UserProps {
+	userInfo: UserInfo;
 	handleLogin(username: string, password: string): any;
 	handleLogout(): void;
+	getUser(): void;
+	setZoneId(id: number): void;
 }
 
 export const UserContext = React.createContext<UserProps>({
-	username: '',
-	login: false,
+	userInfo: {
+		username: '',
+		login: false,
+		zoneId: 0
+	},
 	handleLogin: () => {},
-	handleLogout: () => {}
+	handleLogout: () => {},
+	getUser: () => {},
+	setZoneId: () => {}
 });
 export const UserComsumer = UserContext.Consumer;
 
@@ -26,8 +40,10 @@ export class UserProvider extends React.Component<any, any> {
 	constructor(props) {
 		super(props);
 		this.state = {
+			userInfo:{
 			username: '',
-			login: false
+			login: false,
+			zoneId: 0}
 		};
 	}
 
@@ -38,53 +54,68 @@ export class UserProvider extends React.Component<any, any> {
 
 		const res: any = await postJson(LOGIN_URL, { username, password });
 		console.log(res);
-		if (res.status === 200) {
+		res.token = 123;
+		if (res.code === 200) {
 			this.setState({
-				username,
-				login: true
+				userInfo: { username, login: true, zoneId: 6666 }
 			});
+
+			window.localStorage.setItem('TOKEN', res.token);
 			message.success('登录成功');
-			return true;
+			return userInfo;
 		} else {
 			this.setState({
 				userName: '',
-				login: false
+				login: false,
+				zoneId: 0
 			});
-			return false;
+			return {};
 		}
 	};
 
 	handleLogout = () => {
 		this.setState({
 			userName: '',
-			login: false
+			login: false,
+			zoneId: 0
 		});
 	};
 
-	// renderProvider = (context: UserProps) => {
-	// 	const { children } = this.props;
-	// 	const { username, login } = this.state;
-	// 	const userconfig: UserProps = {
-	// 		...context,
-	// 		username,
-	// 		login,
-	// 		handleLogin: this.handleLogin,
-	// 		handleLogout: this.handleLogout
-	// 	};
-	// 	return (
-	// 		<UserContext.Provider value={userconfig}>{children}</UserContext.Provider>
-	// 	);
-	// };
+	getUser = async () => {
+		const response: any = await getJson(`${'/rap'}${GET_USER}`);
+		if (response.code === 0 && response.success === true) {
+			// login success
+			const { userName: returnUserName, userId, zoneId } = response.data;
+			this.setState({
+				userId,
+				userName: returnUserName,
+				login: true,
+				zoneId
+			});
+		} else {
+			this.setState({
+				userId: '',
+				userName: '',
+				login: false,
+				zoneId: 0
+			});
+		}
+	};
+
+	setZoneId = (zoneId) => {
+		this.setState({ zoneId });
+	};
 
 	render() {
 		//return <UserComsumer>{this.renderProvider}</UserComsumer>;
-		const { username, login } = this.state;
+		const { userInfo } = this.state;
 		const { children } = this.props;
 		const userconfig: UserProps = {
-			username,
-			login,
+			userInfo,
 			handleLogin: this.handleLogin,
-			handleLogout: this.handleLogout
+			handleLogout: this.handleLogout,
+			getUser: this.getUser,
+			setZoneId: this.setZoneId
 		};
 		return <UserContext.Provider value={userconfig}>{children}</UserContext.Provider>;
 	}

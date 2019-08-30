@@ -1,17 +1,21 @@
 import './index.less';
 import * as React from 'react';
-import { Menu, Icon, Avatar, Descriptions } from 'antd';
+import { Menu, Icon, Avatar, Descriptions, Select } from 'antd';
 import history from '../../routes/history';
-//import { createBrowserHistory } from 'history';
+import { createAction } from 'redux-actions';
+import StoreState from '../../store/store';
+import { connect } from 'react-redux';
 const { SubMenu } = Menu;
+const { Option } = Select;
 
-//const history = createBrowserHistory({ basename: '/content' });
-
+const changeLanguage = createAction<{ locale: string }>('CHANGELLANGUAGE');
 interface Iprops {
 	username: string;
 	email: string;
 	wechat: string;
 	signature: string;
+	zoneId: number;
+	changeLanguage: typeof changeLanguage;
 }
 
 export const MenuState = {
@@ -20,27 +24,28 @@ export const MenuState = {
 	wechat: 'leo-1996',
 	signature: 'stay foolish'
 };
+
 class MenuBar extends React.Component<Iprops, any> {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isOwner: true
+		};
+	}
 	render() {
+		console.log(this.props);
 		return (
 			<div className="MenuBar">
 				<div className="MenuBar__Intro">
 					<Avatar className="MenuBar__Intro__Avatar" size={128} icon="user" />
-					<Descriptions
-						className="MenuBar__Intro__Title"
-						title={this.props.username}
-						column={1}
-					>
+					<Descriptions className="MenuBar__Intro__Title" title={this.props.username} column={1}>
 						<Descriptions.Item className="MenuBar__Intro__Label" label="WeChat">
 							{this.props.wechat}
 						</Descriptions.Item>
 						<Descriptions.Item className="MenuBar__Intro__Label" label="Email">
 							{this.props.email}
 						</Descriptions.Item>
-						<Descriptions.Item
-							className="MenuBar__Intro__Label"
-							label="Signature"
-						>
+						<Descriptions.Item className="MenuBar__Intro__Label" label="Signature">
 							{this.props.signature}
 						</Descriptions.Item>
 					</Descriptions>
@@ -55,7 +60,7 @@ class MenuBar extends React.Component<Iprops, any> {
 							</span>
 						}
 						onTitleClick={() => {
-							history.push('/content/');
+							history.push(`/content/${this.props.zoneId}/`);
 						}}
 					/>
 					<SubMenu
@@ -67,7 +72,7 @@ class MenuBar extends React.Component<Iprops, any> {
 							</span>
 						}
 						onTitleClick={() => {
-							history.push('/content/dashboard');
+							history.push(`/content/${this.props.zoneId}/dashboard`);
 						}}
 					/>
 
@@ -80,7 +85,7 @@ class MenuBar extends React.Component<Iprops, any> {
 							</span>
 						}
 						onTitleClick={() => {
-							history.push('/content/table');
+							history.push(`/content/${this.props.zoneId}/table`);
 						}}
 					/>
 					<SubMenu
@@ -92,13 +97,30 @@ class MenuBar extends React.Component<Iprops, any> {
 							</span>
 						}
 						onTitleClick={() => {
-							history.push('/content/detail');
+							history.push(`/content/${this.props.zoneId}/detail`);
 						}}
 					/>
 				</Menu>
+
+				{this.state.isOwner && (
+					<Select className="select-language" value="English" onSelect={this.props.changeLanguage}>
+						<Option value="English">English</Option>
+						<Option value="Chinese">Chinese</Option>
+					</Select>
+				)}
 			</div>
 		);
 	}
 }
 
-export default MenuBar;
+const mapStateToProps = (state: StoreState, ownProps: any) => {
+	return {
+		...ownProps,
+		locale: state.locale
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	{ ...changeLanguage }
+)(MenuBar);
