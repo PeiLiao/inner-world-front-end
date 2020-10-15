@@ -34,6 +34,9 @@ class Content extends React.Component<any, any> {
 		console.log('menu', this.props);
 		return (
 			<div className="ContentPage">
+				<header>
+					Logout
+				</header>
 				<div className="MenuContentLayout__left">
 					<MenuBar {...this.state.ownerInfo} />
 				</div>

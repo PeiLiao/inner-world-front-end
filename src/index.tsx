@@ -10,7 +10,7 @@ import { createStore, applyMiddleware } from 'redux';
 import appReducer from './store/reducer';
 
 const sagaMiddleware = createSagaMiddleware({
-	onError: function(e: any) {
+	onError: function (e: any) {
 		console.log(e);
 	}
 });
@@ -22,4 +22,4 @@ ReactDOM.render(<Provider store={store}>{getRoutes(store)}</Provider>, document.
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.register();

@@ -25,7 +25,7 @@ export const MenuState = {
 	signature: 'stay foolish'
 };
 
-class MenuBar extends React.Component<Iprops, any> {
+class ZoneInfo extends React.Component<Iprops, any> {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -50,58 +50,6 @@ class MenuBar extends React.Component<Iprops, any> {
 						</Descriptions.Item>
 					</Descriptions>
 				</div>
-				<Menu mode="vertical">
-					<SubMenu
-						key="index"
-						title={
-							<span>
-								<Icon type="home" />
-								Index
-							</span>
-						}
-						onTitleClick={() => {
-							history.push(`/content/${this.props.zoneId}/`);
-						}}
-					/>
-					<SubMenu
-						key="dashboard"
-						title={
-							<span>
-								<Icon type="bar-chart" />
-								Dashboard
-							</span>
-						}
-						onTitleClick={() => {
-							history.push(`/content/${this.props.zoneId}/dashboard`);
-						}}
-					/>
-
-					<SubMenu
-						key="table"
-						title={
-							<span>
-								<Icon type="table" />
-								Table
-							</span>
-						}
-						onTitleClick={() => {
-							history.push(`/content/${this.props.zoneId}/table`);
-						}}
-					/>
-					<SubMenu
-						key="detail"
-						title={
-							<span>
-								<Icon type="read" />
-								Detail
-							</span>
-						}
-						onTitleClick={() => {
-							history.push(`/content/${this.props.zoneId}/detail`);
-						}}
-					/>
-				</Menu>
-
 				{this.state.isOwner && (
 					<Select className="select-language" value="English" onSelect={this.props.changeLanguage}>
 						<Option value="English">English</Option>
@@ -123,4 +71,4 @@ const mapStateToProps = (state: StoreState, ownProps: any) => {
 export default connect(
 	mapStateToProps,
 	{ ...changeLanguage }
-)(MenuBar);
+)(ZoneInfo);

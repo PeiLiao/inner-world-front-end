@@ -1,9 +1,9 @@
 import React from 'react';
 import Svg from './logo.svg';
-import { Router, Route, Switch, Link } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import './index.less';
 import Login from '../../Components/LoginForm';
-import { InputNumber } from 'antd';
+import { Input } from 'antd';
 import history from '../../routes/history';
 import { UserComsumer } from '../../contexts/UserContext';
 
@@ -22,6 +22,10 @@ class EnterCom extends React.Component<any, any> {
 		});
 	};
 
+	onEnter = () => {
+
+	}
+
 	componentWillMount = () => {
 		this.setState({ id: this.props.getUser().id });
 	};
@@ -29,18 +33,7 @@ class EnterCom extends React.Component<any, any> {
 	render() {
 		return (
 			<div>
-				<InputNumber className="Home-input" onChange={this.onChange} />
-				<Link className="Home-link" to={`/content/${this.state.id}`}>
-					redirect
-				</Link>
-				{!this.state.login && (
-					<Link className="Home-link" to={'/home/login'}>
-						login
-					</Link>
-				)}
-				<Link className="Home-link" to={'/home/register'}>
-					register
-				</Link>
+				<Input className="Home-input" onChange={this.onChange} onPressEnter={this.onEnter} />
 			</div>
 		);
 	}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { postJson } from '../helpers/utils/HttpService';
-import { LOGIN_URL, GET_USER } from '../constants/url';
+import { LOGIN, GET_USER } from '../constants/url';
 import { message } from 'antd';
 import { getJson } from '../helpers/utils/HttpService';
 import { userInfo } from 'os';
@@ -52,7 +52,7 @@ export class UserProvider extends React.Component<any, any> {
 			return;
 		}
 
-		const res: any = await postJson(LOGIN_URL, { username, password });
+		const res: any = await postJson(LOGIN, { username, password });
 		console.log(res);
 		res.token = 123;
 		if (res.code === 200) {
